@@ -5,6 +5,9 @@
 # PyStandInit.py --help
 # PyStandInit.py --response-file PyStandInit.rsp
 # PyStandInit.py --bitness 32 --compiler MSVC --python-version 3.8.10 --console
+# PyStandInit.py --compiler MSVC --python-version 3.8.10 --package PyQt5 --pip-index-url https://pypi.doubanio.com/simple
+# PyStandInit.py --bitness 64 --compiler MSVC --python-version 3.8.10 --package PyQt5 --pip-index-url https://pypi.doubanio.com/simple
+# PyStandInit.py --bitness 64 --compiler MSVC --python-version 3.10.0 --package PyQt6 --pip-index-url https://pypi.doubanio.com/simple
 
 import argparse
 import collections
@@ -175,25 +178,39 @@ def install_pip(embed_python_dir, get_pip_path):
     subprocess.run(["cmd", "/C", python, get_pip_path], check=True)
 
 
-def install_package(embed_python_dir, package):
-    python = embed_python_dir / "python.exe"
-    subprocess.run(["cmd", "/C", python, "-m", "pip", "install", package], check=True)
-
-
-def install_requirements(embed_python_dir, requirements_file):
+def install_package(embed_python_dir, package, pip_index_url):
     python = embed_python_dir / "python.exe"
     subprocess.run(
-        ["cmd", "/C", python, "-m", "pip", "install", "-r", requirements_file],
+        ["cmd", "/C", python, "-m", "pip", "install", package, "-i", pip_index_url],
         check=True,
     )
 
 
-def install_packages(embed_python_dir, packages):
+def install_requirements(embed_python_dir, requirements_file, pip_index_url):
+    python = embed_python_dir / "python.exe"
+    subprocess.run(
+        [
+            "cmd",
+            "/C",
+            python,
+            "-m",
+            "pip",
+            "install",
+            "-r",
+            requirements_file,
+            "-i",
+            pip_index_url,
+        ],
+        check=True,
+    )
+
+
+def install_packages(embed_python_dir, packages, pip_index_url):
     for package in packages:
         if "requirements.txt" in Path(package).name:
-            install_requirements(embed_python_dir, package)
+            install_requirements(embed_python_dir, package, pip_index_url)
         else:
-            install_package(embed_python_dir, package)
+            install_package(embed_python_dir, package, pip_index_url)
 
 
 def main():
@@ -221,6 +238,11 @@ def main():
     parser.add_argument("--python-version", default="3.8.10", help="Python version")
     parser.add_argument(
         "--package", nargs="+", help="A list of 3rd-party packages to be installed"
+    )
+    parser.add_argument(
+        "--pip-index-url",
+        default="https://pypi.python.org/simple",
+        help="Base url of Python package index",
     )
     parser.add_argument(
         "--response-file",
@@ -306,7 +328,7 @@ def main():
 
     # 8. Install packages
     print("Install packages...")
-    install_packages(embed_python_dir, args.package)
+    install_packages(embed_python_dir, args.package, args.pip_index_url)
 
     # 9. Remove pip and setuptools.
     print("Remove pip and setuptools...")
@@ -353,6 +375,14 @@ if __name__ == "__main__":
 # [Python: Platform independent way to modify PATH environment variable](https://stackoverflow.com/questions/1681208/python-platform-independent-way-to-modify-path-environment-variable)
 # [Check if Python Package is installed](https://stackoverflow.com/questions/1051254/check-if-python-package-is-installed)
 # [how to get argparse to read arguments from a file with an option rather than prefix](https://stackoverflow.com/questions/27433316/how-to-get-argparse-to-read-arguments-from-a-file-with-an-option-rather-than-pre)
+# [Find default pip index-url](https://stackoverflow.com/questions/50100576/find-default-pip-index-url)
+# [pyqt5 安装 sipbuild](https://www.cnblogs.com/hany-postq473111315/p/15402473.html)
+# [[PyQt] Building PyQt from source with sip v5](https://www.riverbankcomputing.com/pipermail/pyqt/2019-October/042281.html)
 
 # Issues:
 # 1. python PyStandInit.py --package parse
+# 2. PyStandInit.py --bitness 32 --compiler MSVC --package PyQt6 --pip-index-url https://pypi.tuna.tsinghua.edu.cn/simple
+#    > ModuleNotFoundError: No module named 'sipbuild'
+# 3. PyStandInit.py --bitness 32 --compiler MSVC --package sip PyQt6 --pip-index-url https://pypi.tuna.tsinghua.edu.cn/simple
+#    > ModuleNotFoundError: No module named 'pyqtbuild'
+# 4. PyStandInit.py --bitness 32 --compiler MSVC --package sip pyqt-builder PyQt6 --pip-index-url https://pypi.tuna.tsinghua.edu.cn/simple

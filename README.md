@@ -17,6 +17,7 @@
 - --pystand-int：PyStand 启动脚本 `PyStand.int` 文件路径；
 - --python-version：指定 Python 版本；当指定一个不可用的 Python 版本时，程序将自动从 Python 下载页面获取所有可用的 Python 版本列表，并打印出来；默认值为 3.8.10；
 - --package：指定需要额外下载的第三方包；也可以指定一个 `requirements.txt`；
+- --pip-index-url：指定 PyPI 镜像 base URL（如：https://mirrors.tuna.tsinghua.edu.cn/help/pypi/、https://pypi.doubanio.com/simple）；默认值为 https://pypi.python.org/simple；
 - --response-file：用户可以将要传递给 PyStandInit.py 的命令行参数存储在文本文件（我们称之为“Response file”）中，然后通过该参数指定 Response file；`PyStandInit.rsp` 便是一个存储了命令行参数的 Response file；
 
 用户可以通过：

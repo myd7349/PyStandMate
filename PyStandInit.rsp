@@ -10,3 +10,5 @@ MSVC
 PyStand.int
 --package
 requirements.txt
+--pip-index-url
+https://pypi.tuna.tsinghua.edu.cn/simple
