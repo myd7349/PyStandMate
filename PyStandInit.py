@@ -13,8 +13,8 @@ from pathlib import Path
 from pprint import pprint
 import re
 import shutil
-import sys
 import subprocess
+import sys
 import urllib.parse
 import urllib.request
 import zipfile
