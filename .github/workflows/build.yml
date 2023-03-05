@@ -62,3 +62,7 @@ jobs:
         generate_release_notes: true
         files: |
           PyStandInit*.zip
+
+
+# References:
+# [GitHub release failed with status: 403](https://github.com/softprops/action-gh-release/issues/236)
