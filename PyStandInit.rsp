@@ -1,0 +1,10 @@
+--pystand-version
+1.0.11
+--python-version
+3.8.10
+--bitness
+32
+--compiler
+MSVC
+--package
+pcpp

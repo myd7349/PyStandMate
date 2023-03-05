@@ -1,0 +1,30 @@
+# PyStandInit
+
+这里假设你已经知道 [PyStand](https://github.com/skywind3000/PyStand) 是做什么用的。PyStandInit 可以看作是一个 PyStand 打包助手。它提供了一个命令行工具，以自动化 PyStand 打包流程。具体工作流程如下：
+
+1. 从 PyStand 的 [Release](https://github.com/skywind3000/PyStand/releases) 页面自动下载指定版本的 `PyStand.exe`；
+2. 从 Python 官网下载页面下载指定版本的 Windows embeddable Python 压缩包；
+3. 自动安装 pip 及指定的第三方包；
+4. 将上述三步下载的文件按照 PyStand 要求的目录结构进行组织；
+
+命令行参数：
+
+- --pystand-version：指定 PyStand 的 Release 版本，仅支持 PyStand 1.0.11 及以上版本，默认值为 1.0.11；
+- --bitness：指定 PyStand 的位数；必须是 32 或 64，默认值为 32；
+- --compiler：指定用于生成 PyStand 的编译器；必须是 MSVC 或 GCC，默认值为 MSVC；
+- --console：当指定该参数时，表示使用 PyStand 的命令行版本；默认使用 PyStand GUI 版本；
+- --python-version：指定 Python 版本；当指定一个不可用的 Python 版本时，程序将自动从 Python 下载页面获取所有可用的 Python 版本列表，并打印出来；默认值为 3.8.10；
+- --package：指定需要额外下载的第三方包；也可以指定一个 `requirements.txt`；
+- --response-file：用户可以将要传递给 PyStandInit.py 的命令行参数存储在文本文件（我们称之为“Response file”）中，然后通过该参数指定 Response file；`PyStandInit.rsp` 便是一个存储了命令行参数的 Response file；
+
+用户可以通过：
+
+```
+python PyStandInit.py --help
+```
+
+获取完整的命令行帮助。
+
+# License
+
+MIT
