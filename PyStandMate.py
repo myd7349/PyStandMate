@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 # Usage:
-# PyStandInit.py --help
-# PyStandInit.py --response-file PyStandInit.rsp
-# PyStandInit.py --bitness 32 --compiler MSVC --python-version 3.8.10 --console
-# PyStandInit.py --compiler MSVC --python-version 3.8.10 --package PyQt5 --pip-index-url https://pypi.doubanio.com/simple
-# PyStandInit.py --bitness 64 --compiler MSVC --python-version 3.8.10 --package PyQt5 --pip-index-url https://pypi.doubanio.com/simple
-# PyStandInit.py --bitness 64 --compiler MSVC --python-version 3.10.0 --package PyQt6 --pip-index-url https://pypi.doubanio.com/simple
+# PyStandMate.py --help
+# PyStandMate.py --response-file PyStandMate.rsp
+# PyStandMate.py --bitness 32 --compiler MSVC --python-version 3.8.10 --console
+# PyStandMate.py --compiler MSVC --python-version 3.8.10 --package PyQt5 --pip-index-url https://pypi.doubanio.com/simple
+# PyStandMate.py --bitness 64 --compiler MSVC --python-version 3.8.10 --package PyQt5 --pip-index-url https://pypi.doubanio.com/simple
+# PyStandMate.py --bitness 64 --compiler MSVC --python-version 3.10.0 --package PyQt6 --pip-index-url https://pypi.doubanio.com/simple
 
 import argparse
 import collections
@@ -180,29 +180,22 @@ def install_pip(embed_python_dir, get_pip_path):
 
 def install_package(embed_python_dir, package, pip_index_url):
     python = embed_python_dir / "python.exe"
-    subprocess.run(
-        ["cmd", "/C", python, "-m", "pip", "install", package, "-i", pip_index_url],
-        check=True,
-    )
+
+    args = ["cmd", "/C", python, "-m", "pip", "install", package]
+    if pip_index_url:
+        args.extend(["-i", pip_index_url])
+
+    subprocess.run(args, check=True)
 
 
 def install_requirements(embed_python_dir, requirements_file, pip_index_url):
     python = embed_python_dir / "python.exe"
-    subprocess.run(
-        [
-            "cmd",
-            "/C",
-            python,
-            "-m",
-            "pip",
-            "install",
-            "-r",
-            requirements_file,
-            "-i",
-            pip_index_url,
-        ],
-        check=True,
-    )
+
+    args = ["cmd", "/C", python, "-m", "pip", "install", "-r", requirements_file]
+    if pip_index_url:
+        args.extend(["-i", pip_index_url])
+
+    subprocess.run(args, check=True)
 
 
 def install_packages(embed_python_dir, packages, pip_index_url):
@@ -219,7 +212,7 @@ def main():
 
     parser = argparse.ArgumentParser(
         prog=script_path.stem,
-        description="PyStand Bootstrap.",
+        description="PyStand packaging mate.",
     )
 
     parser.add_argument("--pystand-version", default="1.0.11", help="PyStand version")
@@ -241,7 +234,6 @@ def main():
     )
     parser.add_argument(
         "--pip-index-url",
-        default="https://pypi.python.org/simple",
         help="Base url of Python package index",
     )
     parser.add_argument(
@@ -360,7 +352,7 @@ if __name__ == "__main__":
 
 # Format code:
 # pip install black
-# black PyStandInit.py
+# black PyStandMate.py
 
 # References:
 # [Regular expression to extract URL from an HTML link](https://stackoverflow.com/questions/499345/regular-expression-to-extract-url-from-an-html-link)
@@ -380,9 +372,9 @@ if __name__ == "__main__":
 # [[PyQt] Building PyQt from source with sip v5](https://www.riverbankcomputing.com/pipermail/pyqt/2019-October/042281.html)
 
 # Issues:
-# 1. python PyStandInit.py --package parse
-# 2. PyStandInit.py --bitness 32 --compiler MSVC --package PyQt6 --pip-index-url https://pypi.tuna.tsinghua.edu.cn/simple
+# 1. PyStandMate.py --package parse
+# 2. PyStandMate.py --bitness 32 --compiler MSVC --package PyQt6 --pip-index-url https://pypi.tuna.tsinghua.edu.cn/simple
 #    > ModuleNotFoundError: No module named 'sipbuild'
-# 3. PyStandInit.py --bitness 32 --compiler MSVC --package sip PyQt6 --pip-index-url https://pypi.tuna.tsinghua.edu.cn/simple
+# 3. PyStandMate.py --bitness 32 --compiler MSVC --package sip PyQt6 --pip-index-url https://pypi.tuna.tsinghua.edu.cn/simple
 #    > ModuleNotFoundError: No module named 'pyqtbuild'
-# 4. PyStandInit.py --bitness 32 --compiler MSVC --package sip pyqt-builder PyQt6 --pip-index-url https://pypi.tuna.tsinghua.edu.cn/simple
+# 4. PyStandMate.py --bitness 32 --compiler MSVC --package sip pyqt-builder PyQt6 --pip-index-url https://pypi.tuna.tsinghua.edu.cn/simple

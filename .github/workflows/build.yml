@@ -1,4 +1,4 @@
-name: PyStandInit
+name: PyStandMate
 
 on:
   push:
@@ -24,13 +24,13 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: PyStand init
-      run: python .\PyStandInit.py --response-file PyStandInit.rsp
+    - name: Run
+      run: python .\PyStandMate.py --response-file PyStandMate.rsp
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: PyStandInit-publish
+        name: PyStandMate-publish
         path: publish
 
   publish:
@@ -51,8 +51,8 @@ jobs:
       run: >
         7z
         a
-        PyStandInit-v${{ github.ref_name }}-publish.zip
-        PyStandInit-publish
+        PyStandMate-v${{ github.ref_name }}-publish.zip
+        PyStandMate-publish
 
     - name: Release
       uses: softprops/action-gh-release@v1
@@ -61,7 +61,7 @@ jobs:
       with:
         generate_release_notes: true
         files: |
-          PyStandInit*.zip
+          PyStandMate*.zip
 
 
 # References:
