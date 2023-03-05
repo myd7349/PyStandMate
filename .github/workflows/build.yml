@@ -1,0 +1,64 @@
+name: PyStandInit
+
+on:
+  push:
+  pull_request:
+    types: [ opened, synchronize, reopened, ready_for_review ]
+
+jobs:
+  build:
+    if: >-
+      github.event.pull_request.draft == false
+
+    runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: PyStand init
+      run: python .\PyStandInit.py --response-file PyStandInit.rsp
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: PyStandInit-publish
+        path: publish
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/')
+
+    runs-on: windows-latest
+
+    needs: [ build ]
+
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+
+    - name: List downloaded files
+      run: ls -R
+
+    - name: Create archive
+      run: >
+        7z
+        a
+        PyStandInit-v${{ github.ref_name }}-publish.zip
+        PyStandInit-publish
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        generate_release_notes: true
+        files: |
+          PyStandInit*.zip

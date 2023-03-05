@@ -6,6 +6,7 @@
 2. 从 Python 官网下载页面下载指定版本的 Windows embeddable Python 压缩包；
 3. 自动安装 pip 及指定的第三方包；
 4. 将上述三步下载的文件按照 PyStand 要求的目录结构进行组织；
+5. 利用 GitHub Actiions 自动执行如上流程，并将打包好的文件上传；
 
 命令行参数：
 
@@ -24,6 +25,19 @@ python PyStandInit.py --help
 ```
 
 获取完整的命令行帮助。
+
+# 如何使用？
+
+1. Fork 本仓库；
+2. 按照自己的需求修改 `PyStandInit.rsp`；
+3. 将要下载的第三方包逐行写入 `requirements.txt`；
+4. 推送上述两步的更改，触发 GitHub Actions CI；待 CI 跑完后，即可从相应 Workflow run 的 Summary 页面下载生成的 Artifacts；
+5. 如果需要将上一步的 Artifacts 发布在 GitHub Release 页面，可以在你的最新更改上添加一个 Tag，并将该 Tag 推送至 GitHub；
+
+# TODO
+
+* [ ] 移除 `.dist-info` 文件；
+* [ ] 增加一些 glob 规则文件，以实现包的自动裁剪；
 
 # License
 
