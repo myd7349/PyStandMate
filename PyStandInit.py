@@ -247,6 +247,9 @@ def main():
 
     # 4. Extract Python
     embed_python_dir = script_dir / BUILD_DIR / embed_python_path.stem
+    if embed_python_dir.is_dir():
+        print("Remove build directory...")
+        shutil.rmtree(embed_python_dir)
     print(f"Extract {embed_python_path.name} -> {embed_python_dir.name}...")
     with zipfile.ZipFile(embed_python_path, "r") as zip_ref:
         zip_ref.extractall(embed_python_dir)
@@ -257,7 +260,7 @@ def main():
     )
     pystand_publish_dir = script_dir / PUBLISH_DIR / pystand_publish_subdir
     if pystand_publish_dir.is_dir():
-        print(f"Clear publish directory...")
+        print(f"Remove publish directory...")
         shutil.rmtree(pystand_publish_dir)
     if not pystand_publish_dir.is_dir():
         print(f"Create directory {PUBLISH_DIR}{os.sep}{pystand_publish_subdir}...")
@@ -327,10 +330,6 @@ def main():
         shutil.copytree(
             site_packages_dir, pystand_publish_dir / "site-packages", dirs_exist_ok=True
         )
-
-    # 11. Remove build tree.
-    print("Remove build tree...")
-    shutil.rmtree(embed_python_dir)
 
 
 if __name__ == "__main__":
