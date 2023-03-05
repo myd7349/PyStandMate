@@ -1,0 +1,13 @@
+# coding: utf-8
+
+import ctypes
+
+MB_OK = 0x0
+ICON_INFO = 0x40
+
+
+ctypes.windll.user32.MessageBoxW(
+    None,
+    'Hello, PyStand!',
+    'A simple PyStand sample:',
+    MB_OK | ICON_INFO)
