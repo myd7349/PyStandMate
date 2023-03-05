@@ -307,6 +307,12 @@ def main():
 
     # 10. Copy site-packages.
     if site_packages_dir.is_dir():
+        # Remove .dist-info folders.
+        for dist_info_dir in site_packages_dir.glob("*.dist-info"):
+            if dist_info_dir.is_dir():
+                print(f"Remove directory {dist_info_dir.name}...")
+                shutil.rmtree(dist_info_dir)
+
         print("Copy installed packages...")
         shutil.copytree(
             site_packages_dir, pystand_publish_dir / "site-packages", dirs_exist_ok=True

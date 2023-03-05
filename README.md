@@ -52,8 +52,8 @@ python PyStandInit.py --help
 
 # TODO
 
+* [x] ~~移除 `.dist-info` 文件夹；~~
 * [ ] 自动打包 `PyStand.int` 文件；
-* [ ] 移除 `.dist-info` 文件夹；
 * [ ] 增加一些 glob 规则文件，以实现包的自动裁剪；
 
 # License
