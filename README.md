@@ -3,10 +3,10 @@
 这里假设你已经知道 [PyStand](https://github.com/skywind3000/PyStand) 是做什么用的。PyStandInit 可以看作是一个 PyStand 打包助手。它提供了一个命令行工具，以自动化 PyStand 打包流程。具体工作流程如下：
 
 1. 从 PyStand 的 [Release](https://github.com/skywind3000/PyStand/releases) 页面自动下载指定版本的 `PyStand.exe`；
-2. 从 Python 官网下载页面下载指定版本的 Windows embeddable Python 压缩包；
+2. 从 Python 官网下载指定版本的 [Windows embeddable Python](https://www.python.org/downloads/windows/) 压缩包；
 3. 自动安装 pip 及指定的第三方包；
 4. 将上述三步下载的文件按照 PyStand 要求的目录结构进行组织；
-5. 利用 GitHub Actiions 自动执行如上流程，并将打包好的文件上传；
+5. 利用 GitHub Actions 自动执行如上流程，并将打包好的文件上传；
 
 命令行参数：
 
@@ -43,7 +43,7 @@ python PyStandInit.py --help
    python .\PyStandInit.py --response-file PyStandInit.rsp
    ```
 
-### 方式二：通过 GitHub Actions CI 实现自动化
+### 方式二：通过 GitHub Actions 实现自动化
 
 1. Fork 本仓库；
 2. 按照自己的需求修改 `PyStandInit.rsp`；
