@@ -14,6 +14,7 @@
 - --bitness：指定 PyStand 的位数；必须是 32 或 64，默认值为 32；
 - --compiler：指定用于生成 PyStand 的编译器；必须是 MSVC 或 GCC，默认值为 MSVC；
 - --console：当指定该参数时，表示使用 PyStand 的命令行版本；默认使用 PyStand GUI 版本；
+- --pystand-int：PyStand 启动脚本 `PyStand.int` 文件路径；
 - --python-version：指定 Python 版本；当指定一个不可用的 Python 版本时，程序将自动从 Python 下载页面获取所有可用的 Python 版本列表，并打印出来；默认值为 3.8.10；
 - --package：指定需要额外下载的第三方包；也可以指定一个 `requirements.txt`；
 - --response-file：用户可以将要传递给 PyStandInit.py 的命令行参数存储在文本文件（我们称之为“Response file”）中，然后通过该参数指定 Response file；`PyStandInit.rsp` 便是一个存储了命令行参数的 Response file；
@@ -47,13 +48,13 @@ python PyStandInit.py --help
 1. Fork 本仓库；
 2. 按照自己的需求修改 `PyStandInit.rsp`；
 3. 将要下载的第三方包逐行写入 `requirements.txt`；
-4. 推送上述两步的更改，触发 GitHub Actions CI；待 CI 跑完后，即可从相应 Workflow run 的 Summary 页面下载生成的 Artifacts；
-5. 如果需要将上一步的 Artifacts 发布在 GitHub Release 页面，可以在你的最新更改上添加一个 Tag，并将该 Tag 推送至 GitHub；
+4. 提交上述两步的更改，触发 GitHub Actions CI；待 CI 跑完后，即可从相应 Workflow run 的 Summary 页面下载生成的 Artifacts；
+5. 如果需要将上一步的 Artifacts 发布在 GitHub Release 页面，可以在最新的提交上添加一个 Tag，并将该 Tag 推送至 GitHub；
 
 # TODO
 
 * [x] ~~移除 `.dist-info` 文件夹；~~
-* [ ] 自动打包 `PyStand.int` 文件；
+* [x] ~~自动打包 `PyStand.int` 文件；~~
 * [ ] 增加一些 glob 规则文件，以实现包的自动裁剪；
 
 # License

@@ -6,5 +6,7 @@
 32
 --compiler
 MSVC
+--pystand-int
+PyStand.int
 --package
 requirements.txt

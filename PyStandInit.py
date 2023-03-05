@@ -215,6 +215,9 @@ def main():
     parser.add_argument(
         "--console", action="store_true", help="Use PyStand CLI instead of GUI"
     )
+    parser.add_argument(
+        "--pystand-int", default="PyStand.int", help="PyStand.int script"
+    )
     parser.add_argument("--python-version", default="3.8.10", help="Python version")
     parser.add_argument(
         "--package", nargs="+", help="A list of 3rd-party packages to be installed"
@@ -269,6 +272,13 @@ def main():
     print(f"Copy Python...")
     runtime_dir = pystand_publish_dir / "runtime"
     shutil.copytree(embed_python_dir, runtime_dir, dirs_exist_ok=True)
+    # 5.3 Copy PyStand.int
+    pystand_int_path = Path(args.pystand_int)
+    if pystand_int_path.is_file():
+        print(f"Copy {pystand_int_path.name} -> PyStand.int...")
+        shutil.copy2(pystand_int_path, pystand_publish_dir / "PyStand.int")
+    else:
+        print(f"{pystand_int_path} is not a regular file.")
 
     if not args.package:
         sys.exit(0)
