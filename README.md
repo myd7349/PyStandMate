@@ -30,7 +30,17 @@ python PyStandInit.py --help
 
 ### 方式一：在本地计算机上运行
 
-将本仓库的代码克隆或下载到本地，然后通过命令行运行 `PyStandInit.py` 即可。
+1. 将本仓库的代码克隆或下载到本地；
+
+2. 按照自己的需求修改 `PyStandInit.rsp`；
+
+3. 将要下载的第三方包逐行写入 `requirements.txt`；
+
+4. 通过命令行运行：
+
+   ```
+   python .\PyStandInit.py --response-file PyStandInit.rsp
+   ```
 
 ### 方式二：通过 GitHub Actions CI 实现自动化
 
