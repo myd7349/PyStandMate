@@ -28,6 +28,12 @@ python PyStandInit.py --help
 
 # 如何使用？
 
+### 方式一：在本地计算机上运行
+
+将本仓库的代码克隆或下载到本地，然后通过命令行运行 `PyStandInit.py` 即可。
+
+### 方式二：通过 GitHub Actions CI 实现自动化
+
 1. Fork 本仓库；
 2. 按照自己的需求修改 `PyStandInit.rsp`；
 3. 将要下载的第三方包逐行写入 `requirements.txt`；
@@ -36,7 +42,8 @@ python PyStandInit.py --help
 
 # TODO
 
-* [ ] 移除 `.dist-info` 文件；
+* [ ] 自动打包 `PyStand.int` 文件；
+* [ ] 移除 `.dist-info` 文件夹；
 * [ ] 增加一些 glob 规则文件，以实现包的自动裁剪；
 
 # License
